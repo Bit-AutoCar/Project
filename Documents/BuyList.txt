@@ -1,0 +1,35 @@
+<<구매내역>>
+-라즈베리파이
+링크 : http://www.eleparts.co.kr/EPXDVKYK
+가격 : 51,000
+수량 : 2개(우, 조)
+
+-xboxone
+링크 : http://item2.gmarket.co.kr/Item/detailview/Item.aspx?goodscode=698693541&GoodsSale=Y&jaehuid=200001169&NaPm=ct%3Dicczp5j4|ci%3D5664aaf4b2ba4513f9bd662a1da622fbb75d57b2|tr%3Dsl|sn%3D24|hk%3D836c76a6b8477cd5c8c0254b8b140d188dffad51
+가격 : 46,000
+
+-탱크바퀴
+링크 : http://item.taobao.com/item.htm?spm=a230r.1.14.108.T7T3IU&id=39274199882&ns=1&abbucket=0#detail
+가격 : 236.00(위안) 한화로 약 50,000
+
+-와이파이동글 (ip TIME N100 MINI)
+링크 : http://www.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&prdNo=758127868&NaPm=ct=icd09vo8|ci=fbe77bc6a085c5a5144547214dc050e36dea656d|tr=sl|sn=17703|hk=8bc4db35fbb59b1b1aad011404155b9e329fd0ce
+가격 : 7,600
+수량 : 3개
+
+-RPi Camera(C)
+링크 : http://www.eleparts.co.kr/EPXDVF6A
+가격 : 26,200
+
+-sd card
+링크 : http://prod.danawa.com/info/?pcode=2577624&keyword=sd%C4%AB%B5%E5
+가격 : 10,000(우, 조)
+
+<<돈>>
+우 : 라즈베리파이, sd카드, 와이파이동글
+조 : 라즈베리파이, sd카드, 와이파이동글, xboxone
+최 : 와이파이동글
+서 : RPi Camera(B)
+
+탱크바퀴 : 뿜빠이
+
