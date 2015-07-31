@@ -114,6 +114,11 @@ int main(int argc, char*argv[])
 
 	else if(pid == 0)
 	{
+		pinMode(GO, OUTPUT);
+		pinMode(LEFT, OUTPUT);
+		pinMode(RIGHT, OUTPUT);
+		pinMode(BACK, OUTPUT);
+
 		while(1)
 		{
 			if((size = read(client_fd, rbuf, MAXLINE)) > 0)
@@ -127,11 +132,6 @@ int main(int argc, char*argv[])
 				}
 				if(wiringPiSetupGpio() == -1)
 					return 1;
-
-				pinMode(GO, OUTPUT);
-				pinMode(LEFT, OUTPUT);
-				pinMode(RIGHT, OUTPUT);
-				pinMode(BACK, OUTPUT);
 
 				if(strncmp(rbuf, "Go", (size_t) size - 1) == 0)
 				{
