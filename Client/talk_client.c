@@ -10,15 +10,19 @@
 
 #define MAXLINE 1024
 
+int OUTPUT_GO = 0;
+int OUTPUT_LEFT = 0;
+int OUTPUT_RIGHT = 0;
+int OUTPUT_BACK = 0;
+
 char *escapechar = "exit\n";
 
 int main(int argc, char *argv[])
 {
-	char sendline[MAXLINE], recvline[MAXLINE + 1];
+	char sendline[MAXLINE];
 	char *haddr;
 	int size;
 	int port;
-	pid_t pid;
 	static int s;
 	static struct sockaddr_in server_addr;
 	int len;
@@ -67,49 +71,76 @@ int main(int argc, char *argv[])
 
 	while(1)
 	{
+	read(0, sendline, MAXLINE);
 		size = strlen(sendline);
 		sendline[size] = '\0';
 
 		if(strncmp(sendline, "Go", (size_t)size) == 0)
 		{
-			write(s, "Go", strlen("Go"));
+			if(OUTPUT_GO == 0)
+			{
+				write(s, "Go", strlen("Go"));
+				OUTPUT_GO = 1;
+			}
 		}
 		else if(strncmp(sendline, "Left", (size_t)size) == 0)
 		{
-			write(s, "Left", strlen("Left"));
+			if(OUTPUT_LEFT == 0)
+			{
+				write(s, "Left", strlen("Left"));
+				OUTPUT_LEFT = 1;
+			}
 		}
 		else if(strncmp(sendline, "Right", (size_t)size) == 0)
 		{
-			write(s, "Right", strlen("Right"));
+			if(OUTPUT_RIGHT == 0)
+			{
+				write(s, "Right", strlen("Right"));
+				OUTPUT_RIGHT = 1;
+			}
 		}
 		else if(strncmp(sendline, "Back", (size_t)size) == 0)
 		{
-			write(s, "Back", strlen("Back"));
+			if(OUTPUT_BACK == 0)
+			{
+				write(s, "Back", strlen("Back"));
+				OUTPUT_BACK = 1;
+			}
 		}
 		else if(strncmp(sendline, "Stop_Go", (size_t)size) == 0)
 		{
-			write(s, "Stop_Go", strlen("Stop_Go"));
+			if(OUTPUT_GO == 1)
+			{
+				write(s, "Stop_Go", strlen("Stop_Go"));
+				OUTPUT_GO = 0;
+			}
 		}
 		else if(strncmp(sendline, "Stop_Left", (size_t)size) == 0)
 		{
-			write(s, "Stop_Left", strlen("Stop_Left"));
+			if(OUTPUT_LEFT == 1)
+			{
+				write(s, "Stop_Left", strlen("Stop_Left"));
+				OUTPUT_LEFT = 0;
+			}	
 		}
 		else if(strncmp(sendline, "Stop_Right", (size_t)size) == 0)
 		{
-			write(s, "Stop_Right", strlen("Stop_Right"));
+			if(OUTPUT_RIGHT == 1)
+			{
+				write(s, "Stop_Right", strlen("Stop_Right"));
+				OUTPUT_RIGHT = 0;
+			}
 		}
 		else if(strncmp(sendline, "Stop_Back", (size_t)size) == 0)
 		{
-			write(s, "Stop_Back", strlen("Stop_Back"));
+			if(OUTPUT_BACK == 1)
+			{
+				write(s, "Stop_Back", strlen("Stop_Back"));
+				OUTPUT_BACK = 0;
+			}
 		}
 		printf("Send Signal = << %s >> \n", sendline);
 		
-		if(strncmp(sendline, escapechar, 4) == 0)
-		{
-			kill(pid, SIGQUIT);
-			break;
-		}
-
 	}
 	close(s);
 	return 0;
