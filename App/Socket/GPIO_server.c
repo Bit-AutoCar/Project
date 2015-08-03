@@ -201,7 +201,7 @@ int main(int argc, char*argv[])
 					printf("Down!!\n");
 					GPIO_BACK = 0;
 				}
-//				printf("%s", rbuf);
+				printf("\n--data : << %s >>\n\n", rbuf);
 			}
 		}
 	}
