@@ -1,0 +1,95 @@
+## Git
+
+DBMNS 데이터베이스 관리시스템이라고 불리며 다수의 사용자들이 데이터를 기록하거나 접근할 수 있도록 하는 프로그램이다.
+다중 사용자가 공유한 파일을 동시에 편집할시 원활한 작업이 이루어 지도록 관리해주는 프로그램으로 Git을 사용합니다.
+
+Git 이란 소스코드를 효과적으로 관리하기 위해 개발된 분산형 버전 관리 시스템입니다.
+
+Git에서는 소스 코드가 변경된 이력을 쉽게 확인할 수 있고, 특정 시점에 저장된 버전과 비교하거나 특정 시점으로 되돌아
+갈수 있습니다.
+또한 파일이 다른 사용자의 변경이력과 충돌한다면 서버에 업로드 할 때 경고 메시지가 발생합니다(conflict)
+
+[git-scm](https://git-scm.com/)
+[Git을 이용한 버전관리](http://backlogtool.com/git-guide/kr/intro/intro1_1.html)
+
+## Git 저장소
+
+저장소(Git repository)란 파일이나 디렉토리(폴더)를 저장해 두는 곳입니다. Git 의 장점은
+파일 변경 이력별로 구분되어진다는 점입니다.
+
+#### Git 시작하기
+
+1. 계정 생성
+
+[Github 공식 홈페이지](https://github.com/)에서 새로운 계정을 생성합니다.
+
+2. 키 등록하기
+
+[SSH 공개키 만들기](https://git-scm.com/book/ko/v1/Git-%EC%84%9C%EB%B2%84-SSH-%EA%B3%B5%EA%B0%9C%ED%82%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+사용을 위해서 PC의 인증키를 생성합니다.(Setting - SSH-Key 에서 등록합니다.)
+
+#### 원격 저장소(Remote Repository)
+
+파일이 저장되는 원격 저장소로 공유하기 위한 저장소입니다.
+작업 이력 업로드시 다른 사용자가 내려 받을수 있습니다.
+
+Project Repository 를 사용합니다.
+
+```
+git clone https://github.com/Bit-AutoCar/Project.git
+```
+
+#### 로컬 저장소(Local Repository)
+
+개인 PC에서 관리되는 저장소입니다.
+작업 완료된 내용을 원격 저장 할 수 있습니다.
+원격 저장소에 명시된 Repository를 클론함 으로써 개인장비에서 사용합니다.
+
+
+#### 저장소 공유
+
+원격 저장소를 사용하기 위해서는 `clone` 또는 새로운 저장소 `생성`을 합니다.
+
+##### 저장소 신규 생성 (git init)
+
+[저장소 생성](https://git-scm.com/docs/git-init)을 명령어를 통해서 생성할 수 있습니다.
+`github.com` 에서 새로운 저장소 생성시 제공되는 설명서는 다음과 같습니다.
+
+
+`rumidier-test` 라는 저장소를 새로 생성후 자신의 저장소에서 아래의 내용을 실행합니다.
+
+```
+echo "# rumidier-test" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:rumidier/rumidier-test.git
+git push -u origin master
+```
+
+##### 저장소 복제 (git clone)
+
+[저장소 복제](https://git-scm.com/docs/git-clone)는 기존에 생성되어있는 저장소를
+복제합니다.
+
+```
+git clone https://github.com/Bit-AutoCar/Project.git
+```
+
+##### Project 저장소 사용하기
+
+  - git status : 변경 이력 확인
+  - git pull   : 원격 저장소 내역 다운로드
+  - git add    : 로컬 저장소 변경 이력 스테이징 상태 전환
+  - git commit : 로컬 저장소 스테이징 상태인 이력 메시지 작성
+  - git push   : 로컬 저장소 변경 이력 원격 저장소에 반영
+
+사용 방법
+
+```
+$ git status
+$ git add test.c
+$ git commit -v test.c
+$ git pull
+$ git push
+```

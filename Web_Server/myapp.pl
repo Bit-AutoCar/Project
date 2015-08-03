@@ -228,35 +228,40 @@ __DATA__
 % layout 'default';
 % title 'LIST';
 
-        <table width=580 border=0 cellpadding=2 cellspacing=1 bgcolor=#999999>
-        <tr height=20 colspan=4 align=center bgcolor=#CCCCCC >
-          <td color=white>No. </td>
-          <td>제목</td>
-          <td>글쓴이</td>
-          <td>date</td>
-        </tr>
-        % for my $id ( reverse sort { $a <=> $b } keys %$articles ) {
-        <tr bgcolor="white">
-          <td><%= $id %></td>
-          <td><a href="/read/<%= $id %>"><%= $articles->{$id}{title} %></a></td>
-          <td><%= $articles->{$id}{name} %></td>
-          <td><%= $articles->{$id}{wdate} %></td>
-        </tr>
-        % }
-        <tr>
-          <td colspan=4 bgcolor=#999999>
-            <table width=100%>
-              <tr>
-                <td width=2000 align=center height=20>
-                  <a href='/write' style="text-decoration:none;"><font color=white>[글쓰기]</font></a>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+<div align="center" style="margin: 0 0 10px 10px">
+      <ul>
+        <input type="button" style=font-size: 20pt; width:70; height:60; value="1" onClick="cmd('GO')">
+      </ul>
+      <ul>
+        <input type="button" style=font-size: 20pt; width:70; height:60; value="<" onClick="cmd('LEFT')">
+        <input type="button" style=font-size: 20pt; width:70; height:60; value="X" onClick="cmd('STOP')">
+        <input type="button" style=font-size: 20pt; width:70; height:60; value=">" onClick="cmd('RIGHT')">
+      </ul>
+      <ul >
+        <input type="button" style=font-size: 20pt; width:70; height:60; value="|" onClick="cmd('BACK')">
+      </ul>
+    </div>
+    <script type="text/javascript">
+      function cmd(value) {
+          if( window.XMLHttpRequest ) {
+              request = new XMLHttpRequest();
+          }
 
-@@ read.html.ep
+          if (!request ) {
+              alert("XMLHttpRequest Error");
+              return false;
+          }
+
+          var send = 'cmd=" + value;
+
+          request.open('POST', '/rccar', true);
+
+          request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          request.setRequestHeader('Content-Length', send.length);
+          request.setRequestHeader('Connection', 'close');
+          request.send(send);
+      }
+    </script> read.html.ep
 % layout 'default';
 % title 'READ';
 
