@@ -44,12 +44,11 @@ while(1)
 # set custom HTTP request header fields
             my $req = HTTP::Request->new(POST => $server_endpoint);
             $req->header('content-type' => 'application/json');
-            $req->header('x-auth-token' => 'kfksj48sdfj4jd9d');
 
 # add POST data to HTTP request body
             my $post_data = "{ course: $data }";
             $req->content($post_data);
-						$ua->request($req);
+            $ua->post($req);
 
             say $data;
             print $client_socket $data;
