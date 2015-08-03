@@ -41,14 +41,7 @@ while(1)
             my $ua = LWP::UserAgent->new;
             my $server_endpoint = "http://192.168.1.31:3000/drive";
 
-# set custom HTTP request header fields
-            my $req = HTTP::Request->new(POST => $server_endpoint);
-            $req->header('content-type' => 'application/json');
-
-# add POST data to HTTP request body
-            my $post_data = "{ course: $data }";
-            $req->content($post_data);
-            $ua->post($req);
+            $ua->post($server_endpoint, { course => $data });
 
             say $data;
             print $client_socket $data;

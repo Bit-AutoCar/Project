@@ -38,31 +38,31 @@ post '/drive' => sub {
 # 12 -> 17, 16 -> 18
 # 20 -> 22, 21-> 27 
 
-		if ($course eq 'GO') {
+		if ($course eq 'Go') {
 			$bcm->gpio_write(17, 1);
 			$bcm->gpio_write(18, 0);
 			$bcm->gpio_write(22, 1);
 			$bcm->gpio_write(27, 0);
 		}
-		elsif ($course eq 'LEFT') {
+		elsif ($course eq 'Left') {
 			$bcm->gpio_write(17,1);
 			$bcm->gpio_write(18,0);
 			$bcm->gpio_write(22,0);
 			$bcm->gpio_write(27,1);
 		}
-		elsif ($course eq 'RIGHT') {
+		elsif ($course eq 'Right') {
 			$bcm->gpio_write(17,0);
 			$bcm->gpio_write(18,1);
 			$bcm->gpio_write(22,1);
 			$bcm->gpio_write(27,0);
 		}
-		elsif ($course eq 'BACK') {
+		elsif ($course eq 'Back') {
 			$bcm->gpio_write(17,0);
 			$bcm->gpio_write(18,1);
 			$bcm->gpio_write(22,0);
 			$bcm->gpio_write(27,1);
 		}
-		elsif ($course eq 'STOP') {
+		elsif ($course eq 'Stop') {
 			$bcm->gpio_write(17, 0);
 			$bcm->gpio_write(18, 0);
 			$bcm->gpio_write(22, 0);
