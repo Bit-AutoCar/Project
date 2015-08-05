@@ -35,41 +35,38 @@ post '/drive' => sub {
 		$bcm->gpio_write(23, 1);
 		$bcm->gpio_write(24, 1);
 
-# 12 -> 17, 16 -> 18
-# 20 -> 22, 21-> 27 
+# 12 -> 17(오른 1 전방), 16 -> 18 (오른쪽 후진) 17:1 18:0 전진 17:0 18:1 후진
+# 20 -> 22, 21-> 27  22:1 27:0 전진 22:0 27:1 후진
 
 		if ($course eq 'Go') {
-			$bcm->gpio_write(17, 1);
-			$bcm->gpio_write(18, 0);
 			$bcm->gpio_write(22, 1);
 			$bcm->gpio_write(27, 0);
+			$bcm->gpio_write(17, 1);
+			$bcm->gpio_write(18, 0);
 		}
 		elsif ($course eq 'Left') {
+			$bcm->gpio_write(22,0);
+			$bcm->gpio_write(27,1);
 			$bcm->gpio_write(17,1);
 			$bcm->gpio_write(18,0);
-			$bcm->gpio_write(22,0);
-			$bcm->gpio_write(27,1);
 		}
 		elsif ($course eq 'Right') {
-			$bcm->gpio_write(17,0);
-			$bcm->gpio_write(18,1);
 			$bcm->gpio_write(22,1);
 			$bcm->gpio_write(27,0);
-		}
-		elsif ($course eq 'Back') {
 			$bcm->gpio_write(17,0);
 			$bcm->gpio_write(18,1);
+		}
+		elsif ($course eq 'Back') {
 			$bcm->gpio_write(22,0);
 			$bcm->gpio_write(27,1);
+			$bcm->gpio_write(17,0);
+			$bcm->gpio_write(18,1);
 		}
-		elsif ($course eq 'Stop') {
+		elsif ($course =~ 'Stop') {
 			$bcm->gpio_write(17, 0);
 			$bcm->gpio_write(18, 0);
 			$bcm->gpio_write(22, 0);
 			$bcm->gpio_write(27, 0);
-
-			$bcm->gpio_write(23, 0);
-			$bcm->gpio_write(24, 0);
 		}
 };
 

@@ -6,18 +6,21 @@ use warnings;
 use IO::Socket::INET;
 use LWP::UserAgent;
 
+use constant LOCALHOST => "192.168.1.80";
+use constant WEBSERVER => "http://192.168.1.80:3000/drive";
+
 $| = 1;
 
 my ($socket,$client_socket);
 my ($peeraddress,$peerport);
 
 $socket = new IO::Socket::INET (
-        LocalHost => '192.168.1.31',
-        LocalPort => '3001',
+        LocalHost => LOCALHOST,
+        LocalPort => '3000',
         Proto     => 'tcp',
         Listen    => 5,
         Reuse     => 1,
-        Timeout   => 3
+        Timeout   => 1,
 ) or die "ERROR in Socket Creation : $!\n";
 
 print "SERVER Waiting for client connection on port 3001\n";
@@ -39,7 +42,7 @@ while(1)
             $client_socket->recv($data,1024);
 
             my $ua = LWP::UserAgent->new;
-            my $server_endpoint = "http://192.168.1.31:3000/drive";
+            my $server_endpoint = WEBSERVER;
 
             $ua->post($server_endpoint, { course => $data });
 
