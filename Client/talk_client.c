@@ -71,7 +71,7 @@ void verticalpadpush(int status)
 			message= "release-dowb or up";
 	}
 }
-char *horizonalpadpush(int status)
+void horizonalpadpush(int status)
 {
 	switch(status)
 	{
@@ -85,24 +85,24 @@ char *horizonalpadpush(int status)
 }
 void verticalstickpush(int status)
 {
-	if(status < -110)
+	if(status > 128 && status < 140)
 		message = "up stick push";
-	else if(status > 110)
+	else if(status > 110 && status < 128)
 		message = "down stick push";
-	else if(status < 0)
+	else if(status < 230 && status > 140) 
 		message = "up stick release";
-	else if(status > 0) 
+	else if(status > 20 && status < 110) 
 		message = "down stick release";
 }
 void horizonalstickpush(int status)
 {
-	if(status < -110)
+	if(status > 128 && status < 140)
 		message = "left stick push";
-	else if(status > 110)
+	else if(status > 110 && status < 128)
 		message = "right stick push";
-	else if(status < 0)
+	else if(status < 230 && status >140)
 		message = "left stick release";
-	else if(status > 0) 
+	else if(status > 20 && status < 110) 
 		message = "right stick release";
 
 }
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_GO == 0)
 			{
-				write(s, "GO", strlen("GO"));
+				write(s, "push-Y", strlen("push-Y"));
 				OUTPUT_GO = 1;
 			}
 		}
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_LEFT == 0)
 			{
-				write(s, "LEFT", strlen("LEFT"));
+				write(s, "push-X", strlen("push-X"));
 				OUTPUT_LEFT = 1;
 			}
 		}
@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_RIGHT == 0)
 			{
-				write(s, "RIGHT", strlen("RIGHT"));
+				write(s, "push-B", strlen("push-B"));
 				OUTPUT_RIGHT = 1;
 			}
 		}
@@ -256,7 +256,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_BACK == 0)
 			{
-				write(s, "BACK", strlen("BACK"));
+				write(s, "push-A", strlen("push-A"));
 				OUTPUT_BACK = 1;
 			}
 		}
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_GO == 1)
 			{
-				write(s, "STOP_GO", strlen("STOP_GO"));
+				write(s, "release-Y", strlen("release-Y"));
 				OUTPUT_GO = 0;
 			}
 		}
@@ -273,7 +273,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_LEFT == 1)
 			{
-				write(s, "STOP_LEFT", strlen("STOP_LEFT"));
+				write(s, "release-X", strlen("release-X"));
 				OUTPUT_LEFT = 0;
 			}	
 		}
@@ -281,7 +281,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_RIGHT == 1)
 			{
-				write(s, "STOP_RIGHT", strlen("STOP_RIGHT"));
+				write(s, "release-B", strlen("release-B"));
 				OUTPUT_RIGHT = 0;
 			}
 		}
@@ -289,7 +289,7 @@ int main(int argc, char *argv[])
 		{
 			if(OUTPUT_BACK == 1)
 			{
-				write(s, "STOP_BACK", strlen("STOP_BACK"));
+				write(s, "release-A", strlen("release-A"));
 				OUTPUT_BACK = 0;
 			}
 		}
@@ -300,9 +300,9 @@ int main(int argc, char *argv[])
 			{
 				write(s, "GO", strlen("GO"));
 				OUTPUT_GO = 1;
-				OUTPUT_LEFT = 0;
-				OUTPUT_RIGHT = 0;
-				OUTPUT_BACK = 0;
+//				OUTPUT_LEFT = 0;
+//				OUTPUT_RIGHT = 0;
+//				OUTPUT_BACK = 0;
 			}
 		}
 		else if(strncmp(sendline, "left stick push", (size_t)size) == 0)
@@ -310,10 +310,10 @@ int main(int argc, char *argv[])
 			if(OUTPUT_LEFT == 0)
 			{
 				write(s, "LEFT", strlen("LEFT"));
-				OUTPUT_GO = 0;
+//				OUTPUT_GO = 0;
 				OUTPUT_LEFT = 1;
-				OUTPUT_RIGHT = 0;
-				OUTPUT_BACK = 0;
+//				OUTPUT_RIGHT = 0;
+//				OUTPUT_BACK = 0;
 			}
 		}
 		else if(strncmp(sendline, "right stick push", (size_t)size) == 0)
@@ -321,10 +321,10 @@ int main(int argc, char *argv[])
 			if(OUTPUT_RIGHT == 0)
 			{
 				write(s, "RIGHT", strlen("RIGHT"));
-				OUTPUT_GO = 0;
-				OUTPUT_LEFT = 0;
+//				OUTPUT_GO = 0;
+//				OUTPUT_LEFT = 0;
 				OUTPUT_RIGHT = 1;
-				OUTPUT_BACK = 0;
+//				OUTPUT_BACK = 0;
 			}
 		}
 		else if(strncmp(sendline, "down stick push", (size_t)size) == 0)
@@ -332,9 +332,9 @@ int main(int argc, char *argv[])
 			if(OUTPUT_BACK == 0)
 			{
 				write(s, "BACK", strlen("BACK"));
-				OUTPUT_GO = 0;
-				OUTPUT_LEFT = 0;
-				OUTPUT_RIGHT = 0;
+	//			OUTPUT_GO = 0;
+	//			OUTPUT_LEFT = 0;
+	//			OUTPUT_RIGHT = 0;
 				OUTPUT_BACK = 1;
 			}
 		}
