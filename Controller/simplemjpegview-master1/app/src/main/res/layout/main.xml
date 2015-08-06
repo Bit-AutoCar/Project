@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <com.camera.simplemjpeg.MjpegView
+		android:id="@+id/mv"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+		android:layout_weight="1"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="1">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/buttonBack"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp" />
+
+        <Button
+            android:id="@+id/buttonLeft"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Left"
+            android:layout_above="@+id/buttonBack"
+            android:layout_toLeftOf="@+id/buttonBack"/>
+
+        <Button
+            android:id="@+id/buttonRight"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/buttonBack"
+            android:layout_toRightOf="@+id/buttonGo"
+            android:text="Right"/>
+        <Button
+            android:id="@+id/buttonGo"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="GO"
+            android:layout_above="@+id/buttonLeft"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"/>
+
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DataView"
+            android:textSize="20sp"
+            android:layout_above="@+id/buttonGo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"/>
+
+    </RelativeLayout>
+</LinearLayout>

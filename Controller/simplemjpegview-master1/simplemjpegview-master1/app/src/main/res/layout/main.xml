@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <com.camera.simplemjpeg.MjpegView
+		android:id="@+id/mv"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+		android:layout_weight="0.76"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.52">
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true">
+
+            <Button
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:text="UP"
+                android:id="@+id/buttonup" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:text="DOWN"
+                android:id="@+id/buttondown" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:text="&lt;&lt;&lt;&lt;&lt;&lt;LEFT"
+                android:id="@+id/buttonleft"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/buttonleft" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:text="RIGHT>>>>>>"
+                android:id="@+id/buttonright"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/buttonright" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="temp connect"
+            android:id="@+id/buttonConnect"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/layout2" />
+
+    </RelativeLayout>
+
+</LinearLayout>
