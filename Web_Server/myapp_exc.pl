@@ -3,6 +3,7 @@
 use v5.14;
 use utf8;
 
+use Device::SerialPort::Arduino;
 use Mojolicious::Lite;
 use Mojo::Log;
 
@@ -14,10 +15,19 @@ get '/' => sub {
 		$self->redirect_to( $self->url_for('/drive') );
 };
 
-get '/drive' => sub {
-  my $self = shift;
 
-  $self->render('drive');
+
+
+
+my $Arduino = Device::SerialPort::Arduino->new(
+				port     => '/dev/ttyAMA0',
+				baudrate => 115200,
+			);
+
+get '/drive' => sub {
+	my $self = shift;
+
+	$self->render('drive');
 };
 
 post '/drive' => sub {
@@ -26,47 +36,38 @@ post '/drive' => sub {
 		my $course;
 		$course = $self->param('course');
 
-		`gpio -g mode 17 out`;
-		`gpio -g mode 18 out`;
-		`gpio -g mode 22 out`;
-		`gpio -g mode 27 out`;
-		`gpio -g mode 23 out`;
-		`gpio -g mode 24 out`;
-		`gpio -g write 23 1`;
-		`gpio -g write 24 1`;
-
+		$Arduino->communicate(1);
 # 12 -> 17(오른 1 전방), 16 -> 18 (오른쪽 후진) 17:1 18:0 전진 17:0 18:1 후진
 # 20 -> 22, 21-> 27  22:1 27:0 전진 22:0 27:1 후진
 
 		if ($course eq 'Go') {
-			`gpio -g write 22 1`;
-			`gpio -g write 27 0`;
-			`gpio -g write 17 1`;
-			`gpio -g write 18 0`;
-		}
-		elsif ($course eq 'Left') {
-			`gpio -g write 22 0`;
-			`gpio -g write 27 1`;
-			`gpio -g write 17 1`;
-			`gpio -g write 18 0`;
-		}
-		elsif ($course eq 'Right') {
-			`gpio -g write 22 1`;
-			`gpio -g write 27 0`;
-			`gpio -g write 17 0`;
-			`gpio -g write 18 1`;
+			$Arduino->communicate(1);
+			$log->debug("Go");
 		}
 		elsif ($course eq 'Back') {
-			`gpio -g write 22 0`;
-			`gpio -g write 27 1`;
-			`gpio -g write 17 0`;
-			`gpio -g write 18 1`;
+			$Arduino->communicate(2);
+			$log->debug("Back");
 		}
-		elsif ($course =~ 'Stop') {
-			`gpio -g write 22 0`;
-			`gpio -g write 27 0`;
-			`gpio -g write 17 0`;
-			`gpio -g write 18 0`;
+		elsif ($course eq 'Left') {
+			$Arduino->communicate(3);
+			$log->debug("Left");
+		}
+		elsif ($course eq 'Right') {
+			$Arduino->communicate(4);
+			$log->debug("Right");
+		}
+		elsif ($course =~ 'RLStop') {
+			$Arduino->communicate(5);
+			$log->debug("RLStop");
+		}
+		elsif ($course =~ 'GBStop') {
+			$Arduino->communicate(6);
+			$log->debug("GBStop");
+		}
+		else {
+			$Arduino->communicate(5);
+			$Arduino->communicate(6);
+			$log->debug("All STOP");
 		}
 };
 
