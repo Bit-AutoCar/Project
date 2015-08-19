@@ -15,14 +15,10 @@ get '/' => sub {
 		$self->redirect_to( $self->url_for('/drive') );
 };
 
-
-
-
-
 my $Arduino = Device::SerialPort::Arduino->new(
-				port     => '/dev/ttyAMA0',
-				baudrate => 115200,
-			);
+                  port     => '/dev/ttyAMA0',
+                  baudrate => 115200,
+			  );
 
 get '/drive' => sub {
 	my $self = shift;
@@ -33,13 +29,33 @@ get '/drive' => sub {
 post '/drive' => sub {
     my $self = shift;
 
-		my $course;
+	my $GBgauge;
+	if ($self->param('GBgauge'))
+	{
+		my $GBgear = '1';
+		$GBgauge = $self->param('GBgauge');
+
+		if ($GBgauge eq '1') {
+			$GBgear = 'a';
+		}
+		elsif ($GBgauge eq '2') {
+			$GBgear = 'b';
+		}
+		elsif ($GBgauge eq '3') {
+			$GBgear = 'c';
+		}
+		elsif ($GBgauge eq '4') {
+			$GBgear = 'd';
+		}
+
+		$log->debug("GBgauge : $GBgauge : $GBgear");
+		$Arduino->communicate($GBgear);
+	}
+
+	my $course = '';
+	if($self->param('course'))
+	{
 		$course = $self->param('course');
-
-		$Arduino->communicate(1);
-# 12 -> 17(오른 1 전방), 16 -> 18 (오른쪽 후진) 17:1 18:0 전진 17:0 18:1 후진
-# 20 -> 22, 21-> 27  22:1 27:0 전진 22:0 27:1 후진
-
 		if ($course eq 'Go') {
 			$Arduino->communicate(1);
 			$log->debug("Go");
@@ -69,6 +85,7 @@ post '/drive' => sub {
 			$Arduino->communicate(6);
 			$log->debug("All STOP");
 		}
+	}
 };
 
 app->start;
