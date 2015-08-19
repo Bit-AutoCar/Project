@@ -52,6 +52,26 @@ post '/drive' => sub {
 		$Arduino->communicate($GBgear);
 	}
 
+	my $RLgauge = $self->param('RLgauge');
+	if ($RLgauge)
+	{
+		if ($RLgague eq 'HRight') {
+			$Arduino->communicate('f');#102
+		}
+		elsif ($RLgauge eq 'LRight') {
+			$Arduino->communicate('e');#101
+		}
+		elsif ($RLgauge eq 'HLeft') {
+			$Arduino->communicate('h');#104
+		}
+		elsif ($RLgauge eq 'LLeft') {
+			$Arduino->communicate('g');#103
+		}
+		elsif ($RLgauge eq 'LRStop') {
+			$Arduino->communicate('i');#105
+		}
+	}
+
 	my $course = '';
 	if($self->param('course'))
 	{
