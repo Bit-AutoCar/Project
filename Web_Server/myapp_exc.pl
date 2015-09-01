@@ -55,7 +55,7 @@ post '/drive' => sub {
 	my $RLgauge = $self->param('RLgauge');
 	if ($RLgauge)
 	{
-		if ($RLgague eq 'HRight') {
+		if ($RLgauge eq 'HRight') {
 			$Arduino->communicate('f');#102
 		}
 		elsif ($RLgauge eq 'LRight') {
