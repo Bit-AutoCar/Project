@@ -2,7 +2,7 @@ sudo apt-get install perl-doc
 
 sudo cpan install Device::SerialPort
 
-Device::SerialPort::Arduino
+Device::SerialPort::Arduino # 아두이노를 설치 하기 위한 과정 
 ```
 mkdir arduino_install
 cd arduino_install
@@ -24,12 +24,12 @@ sudo cpan install Encode::Locale
 sudo cpan install IO::HTML
 sudo cpan install HTTP::Request
 sudo cpan install HTTP::Daemon
-sudo cpan install File::Linsting
+sudo cpan install File::Listing
 sudo cpan install HTML::Entities
 sudo cpan install HTML::HeadParser
 sudo cpan install HTTP::Cookies
 sudo cpan install HTTP::Negotiate
 sudo cpan install Net::HTTP
-sudo cpan install www::RobotRules
+sudo cpan install WWW::RobotRules
 
 sudo apt-get install vim
