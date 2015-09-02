@@ -36,40 +36,20 @@ post '/drive' => sub {
 		$GBgauge = $self->param('GBgauge');
 
 		if ($GBgauge eq '1') {
-			$GBgear = 'a';
+			$GBgear = 'a'; #97
 		}
 		elsif ($GBgauge eq '2') {
-			$GBgear = 'b';
+			$GBgear = 'b'; #98
 		}
 		elsif ($GBgauge eq '3') {
-			$GBgear = 'c';
+			$GBgear = 'c'; #99
 		}
 		elsif ($GBgauge eq '4') {
-			$GBgear = 'd';
+			$GBgear = 'd'; #100
 		}
 
 		$log->debug("GBgauge : $GBgauge : $GBgear");
 		$Arduino->communicate($GBgear);
-	}
-
-	my $RLgauge = $self->param('RLgauge');
-	if ($RLgauge)
-	{
-		if ($RLgauge eq 'HRight') {
-			$Arduino->communicate('f');#102
-		}
-		elsif ($RLgauge eq 'LRight') {
-			$Arduino->communicate('e');#101
-		}
-		elsif ($RLgauge eq 'HLeft') {
-			$Arduino->communicate('h');#104
-		}
-		elsif ($RLgauge eq 'LLeft') {
-			$Arduino->communicate('g');#103
-		}
-		elsif ($RLgauge eq 'LRStop') {
-			$Arduino->communicate('i');#105
-		}
 	}
 
 	my $course = '';
@@ -77,34 +57,50 @@ post '/drive' => sub {
 	{
 		$course = $self->param('course');
 		if ($course eq 'Go') {
-			$Arduino->communicate(1);
+			$Arduino->communicate(1); #49
 			$log->debug("Go");
 		}
 		elsif ($course eq 'Back') {
-			$Arduino->communicate(2);
+			$Arduino->communicate(2); #50
 			$log->debug("Back");
 		}
-		elsif ($course eq 'Left') {
-			$Arduino->communicate(3);
-			$log->debug("Left");
+		elsif ($course eq 'LLeft') {
+			$Arduino->communicate(3); #51
+			$log->debug("LLeft");
 		}
-		elsif ($course eq 'Right') {
-			$Arduino->communicate(4);
-			$log->debug("Right");
+		elsif ($course eq 'HLeft') {
+			$Arduino->communicate(4); #52
+			$log->debug("HLeft");
 		}
-		elsif ($course =~ 'RLStop') {
-			$Arduino->communicate(5);
-			$log->debug("RLStop");
+		elsif ($course eq 'LRight') {
+			$Arduino->communicate(5); #53
+			$log->debug("LRight");
+		}
+		elsif ($course eq 'HRight') {
+			$Arduino->communicate(6); #54
+			$log->debug("HRight");
+		}
+		elsif ($course =~ 'LRStop') {
+			$Arduino->communicate(7); #55
+			$log->debug("LRStop");
 		}
 		elsif ($course =~ 'GBStop') {
-			$Arduino->communicate(6);
+			$Arduino->communicate(8); #56
 			$log->debug("GBStop");
 		}
 		else {
-			$Arduino->communicate(5);
-			$Arduino->communicate(6);
+			$Arduino->communicate(7); #55
+			$Arduino->communicate(8); #56
 			$log->debug("All STOP");
 		}
+	}
+
+	my $power = $self->param('Power');
+	if($power)
+	{
+		my $power_value = chr($power);
+		$Arduino->communicate($power_value);
+		$log->debug("power [$power_value]");
 	}
 };
 
