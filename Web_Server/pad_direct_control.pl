@@ -86,7 +86,7 @@ while (1) {
 					}
 					else {
 						if (-5000 < $value && $value < 5000) {
-							$Arduino->communicate(6);
+							$Arduino->communicate(8);
 							say "   >> [GBSTOP]";
 							$fbstat = 'null';
 						}
@@ -106,29 +106,29 @@ while (1) {
 				elsif ($number eq '3') {
 					if ($rlstat eq 'null') {
 						if ($value > 25000) {
-							$Arduino->communicate('f');
+							$Arduino->communicate(6);
 							say "-- [Right]";
 							$rlstat = 'ra';
 						}
 						elsif ($value < -25000) {
-							$Arduino->communicate('h');
+							$Arduino->communicate(4);
 							say "-- [Left]";
 							$rlstat = 'le';
 						}
 					}
 					else {
 						if (-5000 < $value && $value < 5000) {
-							$Arduino->communicate('i');
-							say "   -- RLStop";
+							$Arduino->communicate(7);
+							say "   -- LRStop";
 							$rlstat = 'null';
 						}
 						elsif ($value < -25000 && $rlstat eq 'ra') {
-							$Arduino->communicate('h');
+							$Arduino->communicate(4);
 							say "-- [Left]";
 							$rlstat = 'le';
 						}
 						elsif ($value > 25000 && $rlstat eq 'le') {
-							$Arduino->communicate('f');
+							$Arduino->communicate(6);
 							say "-- [Right]";
 							$rlstat = 'ra';
 						}
