@@ -1,0 +1,53 @@
+### 설치시 ROOT계정으로 접속(아닐시 sudo 앞에 붙이길 요망)
+
+### 카메라 활성화 
+	- apt-get update (저장소에서 패키지 목록 다운로드, 패키지와 종속의 최신 버전 갱신).
+	- apt-get upgrade (패키지 최신버전 패치, 최신버전의 목록은 apt-get update로 부터 얻음).
+	- raspi-config 실행 후 camera 활성화 ( Enable camera ) , Finish 재부팅.
+	- 재부팅 후 raspistill -v -o image.jpg 로 확인.
+
+### V4L2 설명
+	- V4L2(video4Linux2)란 리눅스에서 카메라 입력을 받기 위한 표준 디바이스, 내 프로그램 커널을 통해 I/O요청 확인, 장치 드라이버로 전송이 이루어 짐.
+	- 내 프로그램이 커널을 통해 시스템 하드웨어에 접근 하도록 "dev" 디렉토리 내에 "video*"라는 장치 파일이 생성.
+	- 자료를 읽거나 기타장치로 자료 전송이 가능.
+	- V4L2 지원하는 소프트웨어:aMSN,DVswitch,Ekiga,FFMpeg,FreeJ,GStreamer,kdetv,Kopete,LiVES,MPlayer,MythTV,OpenCV,PyGame,Skype,tvtime,VLC media player,xawtv,Zoneminder
+
+### V4L2 설치 및 활성화
+	- sudo modprobe bcm2835-v4l2 (드라이버 활성화)
+	- ls /dev/video0 ( 생성 확인 )
+	- 	wget http://www.linux-projects.org/listing/uv4l_repo/lrkey.asc && sudo apt-key add ./lrkey.asc (인증키 등록)
+	- vi /etc/apt/sources.list 후 deb http://www.linux-projects.org/listing/uv4l_repo/raspbian/ wheezy main 입력 저장 후 apt-get update(소스리스트 추가 및 업데이트)
+	- apt-get install uv4l uv4l-raspicam (패키지 설치)
+	- uv4l --driver raspicam --auto-video_nr --width 640 --height 480 --encoding jpeg --frame-time 0 (V4L2 장치 활성화)
+	- uv4l --driver raspicam --auto-video_nr --nopreview (V4L2 장치 활성화)
+
+### mjpg-streamer 설치
+	- apt-get install git cmake libjpeg8-dev imagemagick -y (영상 관련 라이브러리 설치) 
+	- ln -s /usr/include/linux/videodev2.h /usr/include/linux/videodev.h (mjpg-streamer 를 컴파일 진행 시에는 요구하는 videodev.h 헤더파일을 변경된 videodev2.h 파일로 링크)
+	- https://github.com/jacksonliam/mjpg-streamer - 다운
+	- cd mjpg-streamer-experimental
+	- make clean all
+	- vi Camera.sh 생성 후 입력 아래 입력 
+	  /*************************************************************************************************************************
+	  export STREAMER_PATH=$HOME/camera/mjpg-streamer/mjpg-streamer-experimental //HOME은 계정경로 			         		   #
+	  export LD_LIBRARY_PATH=$STREAMER_PATH          										                                   #
+	  $STREAMER_PATH/mjpg_streamer -i "input_uvc.so -f 20 -r 200x120 -d /dev/video0 " -o "output_http.so -w $STREAMER_PATH/www"# 
+	  *************************************************************************************************************************/
+	- input_uvc.so 옵션
+	  /***********************************************************
+	  -h help (도움말)					                         #
+	  -d device (비디오 장치 열기)				                 #
+	  -r resoulution (해상도 조정)				                 #
+	  -f fps (초당 프레임)					                     #
+	  -y yuv (YUYV 활성화 ,MJPEG 비활성화)			             #
+	  -q quality (품질)					                         # 
+	  -m minimum_size (한계 사이즈보다 더 작게 드롭)		     #
+	  -n no_dynctrl (리눅스 UVC 드라이버의 dynctrl 사용하지 않음)#
+	  -l led (카메라 LED 조정)				                     #
+	  ***********************************************************/
+
+### V4L2 mjpg-streamer 실행방법
+	- modprobe bcm2835-v4l2 (디바이스 활성화)
+	- ls /dev/video0 (생성 확인)
+	- sh Camera.sh (STREAMER 실행)
+	- http://라즈베리파이IP:8080/ 접속 완료~
