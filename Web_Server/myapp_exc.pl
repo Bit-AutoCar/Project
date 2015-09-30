@@ -64,21 +64,13 @@ post '/drive' => sub {
 			$Arduino->communicate(2); #50
 			$log->debug("Back");
 		}
-		elsif ($course eq 'LLeft') {
-			$Arduino->communicate(3); #51
-			$log->debug("LLeft");
-		}
-		elsif ($course eq 'HLeft') {
+		elsif ($course eq 'Left') {
 			$Arduino->communicate(4); #52
-			$log->debug("HLeft");
+			$log->debug("Left");
 		}
-		elsif ($course eq 'LRight') {
-			$Arduino->communicate(5); #53
-			$log->debug("LRight");
-		}
-		elsif ($course eq 'HRight') {
+		elsif ($course eq 'Right') {
 			$Arduino->communicate(6); #54
-			$log->debug("HRight");
+			$log->debug("Right");
 		}
 		elsif ($course =~ 'LRStop') {
 			$Arduino->communicate(7); #55
