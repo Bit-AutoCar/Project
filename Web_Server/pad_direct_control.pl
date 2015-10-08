@@ -46,26 +46,36 @@ while (1) {
             $number = $_->{number};
             $type   = $_->{type};
             $value  = $_->{value};
-            if ($type eq '1') {
-                if ($number eq '6' && $type eq '1'  && $value eq '1') {
-                    $status = 'end';
-                    say "입력이 중단되었습니다.";
-                    last;
-                }
-
-				if ( $number eq '4' && $type eq '1'  && $value eq '1') {
+            if ($type eq '1' && $value eq '1') {
+				if ($number eq '0') {
+						$Arduino->communicate(chr(105));
+				}
+				elsif ($number eq '1') {
+						$Arduino->communicate(chr(102));
+				}
+				elsif ($number eq '2') {
+						$Arduino->communicate(chr(101));
+				}
+				elsif ($number eq '3') {
+						$Arduino->communicate(chr(104));
+				}
+				elsif ($number eq '4') {
 					unless ($GBgear eq '1') {
 						$GBgear--;
 						$Arduino->communicate(chr($GBgear+96));
 					}
 				}
-
-				if ( $number eq '5' && $type eq '1'  && $value eq '1') {
+				elsif ($number eq '5') {
 					unless ($GBgear eq '4') {
 						$GBgear++;
 						$Arduino->communicate(chr($GBgear+96));
 					}
 				}
+                elsif ($number eq '6') {
+                    $status = 'end';
+                    say "입력이 중단되었습니다.";
+                    last;
+                }
 
 				say chr($GBgear+96).": $number : $type : $value";
             }
@@ -80,6 +90,7 @@ while (1) {
 						elsif ($value < -25000) {
 							$Arduino->communicate(1);#Go
 							$fbstat = 'go';
+							say "go---debug";
 						}
 					}
 					else {
@@ -89,6 +100,7 @@ while (1) {
 						}
 						elsif ($value < -25000 && $fbstat eq 'ba') {
 							$Arduino->communicate(1);#Go
+							say "go---debug";
 							$fbstat = 'go';
 						}
 						elsif ($value > 25000 && $fbstat eq 'go') {
@@ -116,7 +128,6 @@ while (1) {
 						}
 						elsif ($value < -25000 && $rlstat eq 'ra') {
 							$Arduino->communicate(4);#Left
-							say "-- [Left]";
 							$rlstat = 'le';
 						}
 						elsif ($value > 25000 && $rlstat eq 'le') {
